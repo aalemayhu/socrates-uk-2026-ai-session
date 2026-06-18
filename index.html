@@ -227,14 +227,17 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
 <!-- 1.4 what is 2anki -->
 <section>
   <div class="eyebrow">What we're working on</div>
-  <h1 class="title">2anki turns Notion into Anki flashcards</h1>
-  <div class="subtitle">A self-serve, paid SaaS: connect Notion or upload an export, and it converts your pages — toggles, tables, callouts — into <code>.apkg</code> decks. Real users, real money, on the line every upload.</div>
+  <h1 class="title">2anki turns Notion — and a lot more — into Anki decks</h1>
+  <div class="subtitle">A self-serve, paid SaaS. What began as Notion toggle-lists → flashcards grew into a full conversion, AI-generation, and cloud-sync platform. Real users, real money, every upload.</div>
   <div class="cards cols-3">
-    <div class="card"><div class="kicker">The product</div><h3 style="margin-top:6px">One upload → a deck</h3><p>Notion, Markdown, CSV, exports from tools we've never seen. Press a button, get studyable cards back.</p></div>
-    <div class="card"><div class="kicker">The catch</div><h3 style="margin-top:6px">The input is unbounded</h3><p>Every workspace is shaped differently. People upload anything — formats we don't parse yet, nestings we've never met.</p></div>
-    <div class="card"><div class="kicker">The consequence</div><h3 style="margin-top:6px">So bugs <em>are</em> the job</h3><p>A structure a user expects to work but isn't built yet. An export shape that didn't exist last month. The real world arrives one file at a time.</p></div>
+    <div class="card"><div class="kicker">Get it in</div><h3 style="margin-top:6px">15+ input formats</h3><p>Notion (live API <em>and</em> exports), Markdown, HTML, PDF, DOCX, PPTX, XLSX, CSV, OPML, EPUB &amp; Kindle clippings, AnkiApp XML — via web, Dropbox or Google Drive.</p></div>
+    <div class="card"><div class="kicker">Make cards</div><h3 style="margin-top:6px">Every Anki shape</h3><p>~30 Notion block types (toggles, tables, columns, callouts, LaTeX, synced blocks, sub-pages). Basic, reversed, type-in, advanced cloze, image occlusion, MCQ, TTS — with sub-decks, tags, custom CSS.</p></div>
+    <div class="card"><div class="kicker">Go further</div><h3 style="margin-top:6px">AI + cloud sync</h3><p>Claude turns PDFs, photos and prose into cards; chat-to-build decks. "Ankify" runs cloud Anki with two-way Notion↔Anki sync and web spaced-repetition review.</p></div>
   </div>
-  <div class="foot"><span class="note">That fix-heavy log isn't sloppiness — it's an unbounded input space meeting real users.</span><span class="tag">what is 2anki</span></div>
+  <div class="cards cols-1" style="margin-top:16px">
+    <div class="card"><div class="kicker">Why the log runs fix-heavy</div><p style="font-size:15px;margin-top:6px">~15 formats × ~30 block types × ~50 conversion options × live third-party APIs. People upload anything — and expect structures we haven't built yet. The edge cases are effectively unbounded: fixes aren't sloppiness, they're the surface area.</p></div>
+  </div>
+  <div class="foot"><span class="note">Huge input space × huge feature surface = endless real-world edge cases.</span><span class="tag">what is 2anki</span></div>
 </section>
 
 <!-- 1.5 proof -->
