@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Programming the agent — the .claude setup behind 2anki</title>
+<link rel="stylesheet" href="vendor/reveal.css" />
+<style>
+:root {
+  --ink: #16181d;
+  --gray: #5c6370;
+  --line: #e6e7ea;
+  --mono: ui-monospace, "SF Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --blue: #e8f1fb;
+  --green: #e8f4ec;
+  --pink: #fbe9e9;
+  --amber: #fbf0e2;
+}
+
+/* ---- reveal frame ---- */
+.reveal { font-family: var(--serif); color: var(--ink); font-size: 22px; }
+.reveal .slides { text-align: left; }
+.reveal .slides section {
+  background: #fff;
+  padding: 50px 66px 64px;
+  height: 720px;
+  box-sizing: border-box;
+  line-height: 1.45;
+}
+.reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+  font-family: var(--serif); margin: 0; font-weight: 700;
+  text-transform: none; letter-spacing: normal; color: var(--ink); line-height: 1.1;
+}
+.reveal strong { font-weight: 700; color: inherit; }
+.reveal em { font-style: italic; }
+.reveal code {
+  font-family: var(--mono); font-size: .82em; background: #f4f5f7;
+  padding: 1px 5px; border-radius: 5px;
+}
+.reveal ul { margin: 6px 0; padding-left: 20px; list-style: disc; display: block; }
+.reveal li { font-size: 15px; margin: 4px 0; }
+.reveal p { margin: 0; }
+
+/* ---- slide header ---- */
+.eyebrow {
+  text-align: center; font-family: var(--mono); font-size: 12px;
+  letter-spacing: .22em; text-transform: uppercase; color: var(--gray);
+  margin-bottom: 12px;
+}
+.reveal h1.title { text-align: center; font-size: 38px; margin-bottom: 10px; }
+.subtitle {
+  text-align: center; font-size: 17px; color: var(--gray); font-style: italic;
+  max-width: 860px; margin: 0 auto 26px; line-height: 1.4;
+}
+.lede { font-size: 16px; line-height: 1.5; max-width: 920px; margin: 0 auto 22px; text-align: center; }
+
+/* ---- cards ---- */
+.cards { display: grid; gap: 16px; }
+.cols-1 { grid-template-columns: 1fr; }
+.cols-2 { grid-template-columns: 1fr 1fr; }
+.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.cols-4 { grid-template-columns: repeat(4, 1fr); }
+.cols-5 { grid-template-columns: repeat(5, 1fr); }
+.stat-card { text-align: center; padding: 26px 16px; }
+.card {
+  border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.045); background: #fff;
+}
+.reveal .card h3 { font-size: 19px; margin-bottom: 4px; }
+.card p { font-size: 14px; color: var(--gray); margin: 5px 0 0; line-height: 1.4; }
+.card .row { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.kicker { font-family: var(--mono); font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--gray); }
+
+/* ---- chips ---- */
+.chip {
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: .06em;
+  text-transform: uppercase; padding: 3px 9px; border-radius: 999px;
+  background: #eef1f4; color: #2a2d33; white-space: nowrap;
+}
+.chip.blue { background: var(--blue); } .chip.green { background: var(--green); }
+.chip.pink { background: var(--pink); } .chip.amber { background: var(--amber); }
+
+/* ---- stats ---- */
+.statnum { font-family: var(--mono); font-size: 40px; font-weight: 700; letter-spacing: -.02em; line-height: 1; }
+.statlabel { font-size: 13px; color: var(--gray); margin-top: 8px; }
+
+/* ---- code ---- */
+.code {
+  font-family: var(--mono); font-size: 15px; line-height: 1.55;
+  background: #f6f7f9; border: 1px solid var(--line); border-radius: 12px;
+  padding: 18px 20px; color: #2a2d33; white-space: pre; overflow: hidden;
+}
+.code .c { color: #8a909c; }
+.code .b { color: #16181d; font-weight: 700; }
+
+/* ---- footer rule ---- */
+.foot {
+  position: absolute; left: 66px; right: 66px; bottom: 30px;
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 13px; color: var(--gray);
+}
+.foot .note { font-style: italic; }
+.foot .tag { font-family: var(--mono); font-size: 11px; letter-spacing: .04em; }
+
+/* ---- section divider ---- */
+section.sec { display: flex !important; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+.signum { font-size: 96px; font-weight: 700; line-height: .9; }
+.sectitle { font-size: 46px; margin-top: 6px; }
+.secsub { font-size: 16px; color: var(--gray); margin-top: 12px; }
+
+/* ---- title slide ---- */
+section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; gap: 54px; align-items: center; }
+.title-slide .lead-eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--gray); margin-bottom: 18px; }
+.reveal .title-slide .big { font-size: 58px; line-height: 1.02; font-weight: 700; margin-bottom: 18px; }
+.title-slide .deck-sub { font-size: 18px; color: var(--gray); line-height: 1.45; margin-bottom: 28px; }
+.byline { display: flex; align-items: center; gap: 12px; }
+.avatar { width: 42px; height: 42px; border-radius: 999px; background: var(--blue); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 13px; font-weight: 700; }
+.byline .who { font-size: 15px; font-weight: 700; }
+.byline .role { font-size: 13px; color: var(--gray); }
+.agenda-kicker { text-align: center; font-family: var(--mono); font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--gray); margin-bottom: 14px; }
+.agenda-item { display: flex; gap: 18px; align-items: center; border: 1px solid var(--line); border-radius: 12px; padding: 14px 20px; margin-bottom: 12px; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
+.agenda-item .n { font-size: 22px; font-weight: 700; color: var(--gray); min-width: 22px; }
+.agenda-item .h { font-size: 16px; font-weight: 700; }
+.agenda-item .d { font-size: 13px; color: var(--gray); }
+
+/* ---- reveal slide number ---- */
+.reveal .slide-number { font-family: var(--mono); background: none; color: #b9bcc4; font-size: 11px; right: 18px; bottom: 12px; }
+</style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- TITLE -->
+<section class="title-slide" data-slide-number="false">
+  <div>
+    <div class="lead-eyebrow">2anki · Claude Code setup · 2026</div>
+    <div class="big">Programming<br/>the agent</div>
+    <div class="deck-sub">How one repo turns Claude Code from a chatbot into a team member that ships PRs — and can't break the rules. All of it is text + git hooks, in version control.</div>
+    <div class="byline">
+      <div class="avatar">2A</div>
+      <div><div class="who">2anki/server</div><div class="role">Notion → Anki · Express/TypeScript</div></div>
+    </div>
+  </div>
+  <div>
+    <div class="agenda-kicker">Agenda</div>
+    <div class="agenda-item"><div class="n">1</div><div><div class="h">Why a setup at all</div><div class="d">The mega-prompt anti-pattern</div></div></div>
+    <div class="agenda-item"><div class="n">2</div><div><div class="h">The handbook</div><div class="d">CLAUDE.md + 10 path-scoped rule files</div></div></div>
+    <div class="agenda-item"><div class="n">3</div><div><div class="h">The team</div><div class="d">13 sub-agents — the trio + specialists</div></div></div>
+    <div class="agenda-item"><div class="n">4</div><div><div class="h">The enforcement</div><div class="d">14 hooks across the lifecycle</div></div></div>
+    <div class="agenda-item"><div class="n">5</div><div><div class="h">Steal this</div><div class="d">Adopt it in your own repo</div></div></div>
+  </div>
+</section>
+
+<!-- SECTION 1 -->
+<section class="sec" data-slide-number="false">
+  <div class="signum">1</div>
+  <div class="sectitle">Why a setup at all</div>
+  <div class="secsub">The mega-prompt anti-pattern, and what replaces it</div>
+  <div class="foot"><span>Chapter 1 / 5</span><span class="tag">the case for structure</span></div>
+</section>
+
+<!-- 1.1 -->
+<section>
+  <div class="eyebrow">The problem</div>
+  <h1 class="title">One giant prompt doesn't scale</h1>
+  <div class="lede">Stuff every rule, gotcha, and workflow into one system prompt and it rots: too long to read, impossible to scope, and it can't <em>do</em> anything — it can only <em>ask nicely</em>.</div>
+  <div class="cards cols-3">
+    <div class="card"><h3>Always-on is expensive</h3><p>A rule that only matters when editing a migration shouldn't burn tokens on every turn. Load knowledge when the path calls for it.</p></div>
+    <div class="card"><h3>Advice isn't enforcement</h3><p>"Never push to main" in prose is a suggestion. The model can forget it at hour three. A hook that exits non-zero cannot be forgotten.</p></div>
+    <div class="card"><h3>Prose can't delegate</h3><p>"Get a second opinion" is words. A sub-agent is a real second context with its own model and tools.</p></div>
+  </div>
+  <div style="margin-top:18px" class="cards cols-1">
+    <div class="card"><h3>The answer: split knowledge across the lifecycle</h3><p style="font-size:15px">When to <strong>inject</strong> guidance → rules. When to <strong>enforce</strong> it → hooks. When to run a <strong>workflow</strong> → commands &amp; skills. When to <strong>delegate</strong> → sub-agents. Each lives in its own file, in git.</p></div>
+  </div>
+  <div class="foot"><span class="note">Composable customization beats a mega-prompt.</span><span class="tag">why structure</span></div>
+</section>
+
+<!-- 1.2 -->
+<section>
+  <div class="eyebrow">Customization as code</div>
+  <h1 class="title">.claude/ — the anatomy of this repo</h1>
+  <div class="subtitle">Everything Claude knows about 2anki lives in one folder, versioned alongside the code it governs.</div>
+  <div class="cards cols-2">
+    <div>
+      <div class="code"><span class="c"># repo root</span>
+<span class="b">CLAUDE.md</span>            <span class="c"># constitution — @imports rules/*</span>
+.claude/
+├── <span class="b">settings.json</span>     <span class="c"># wires hooks → lifecycle</span>
+├── <span class="b">rules/</span>     (10)   <span class="c"># @imported policy docs</span>
+├── <span class="b">agents/</span>    (13)   <span class="c"># the trio + specialists</span>
+├── <span class="b">commands/</span>  (18)   <span class="c"># slash-command workflows</span>
+├── <span class="b">skills/</span>     (7)   <span class="c"># on-demand procedures</span>
+└── <span class="b">hooks/</span>    (14)   <span class="c"># deterministic guardrails</span></div>
+    </div>
+    <div class="cards cols-1">
+      <div class="card"><div class="row"><h3>Rules &amp; constitution</h3><span class="chip">10 + CLAUDE.md</span></div><p>Markdown policy docs, each row = requirement → do-instead → CWE. <code>@</code>-imported so they're always live.</p></div>
+      <div class="card"><div class="row"><h3>Agents</h3><span class="chip blue">13</span></div><p>Isolated workers — pm, designer, engineer, plus 10 specialists. Cheap model where it fits.</p></div>
+      <div class="card"><div class="row"><h3>Commands &amp; skills</h3><span class="chip green">18 + 7</span></div><p>Repeatable workflows behind a slash, plus loadable engineering procedures.</p></div>
+      <div class="card"><div class="row"><h3>Hooks</h3><span class="chip pink">14</span></div><p>Shell/Python scripts the harness runs on lifecycle events. They can refuse the action.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span class="note">Each file has one job. Read the layer's CLAUDE.md before editing it.</span><span class="tag">.claude/ anatomy</span></div>
+</section>
+
+<!-- 1.3 by the numbers -->
+<section>
+  <div class="eyebrow">By the numbers</div>
+  <h1 class="title">What's checked into .claude/</h1>
+  <div class="subtitle">A real repo, not a toy. This is the surface one engineer maintains alongside the product.</div>
+  <div class="cards cols-5">
+    <div class="card stat-card"><div class="statnum">10</div><div class="statlabel">rule files</div></div>
+    <div class="card stat-card"><div class="statnum">13</div><div class="statlabel">sub-agents</div></div>
+    <div class="card stat-card"><div class="statnum">18</div><div class="statlabel">slash commands</div></div>
+    <div class="card stat-card"><div class="statnum">7</div><div class="statlabel">skills</div></div>
+    <div class="card stat-card"><div class="statnum">14</div><div class="statlabel">lifecycle hooks</div></div>
+  </div>
+  <div class="cards cols-1" style="margin-top:18px">
+    <div class="card"><div class="kicker">The point</div><p style="font-size:15px;margin-top:6px">None of this is framework. It's markdown, JSON, and shell — readable in a PR, evolving with the code. The next five chapters walk each column.</p></div>
+  </div>
+  <div class="foot"><span class="note">Five file types, one job each.</span><span class="tag">.claude/ by the numbers</span></div>
+</section>
+
+<!-- SECTION 2 -->
+<section class="sec" data-slide-number="false">
+  <div class="signum">2</div>
+  <div class="sectitle">The handbook</div>
+  <div class="secsub">CLAUDE.md and the path-scoped rule files</div>
+  <div class="foot"><span>Chapter 2 / 5</span><span class="tag">rules &amp; context</span></div>
+</section>
+
+<!-- 2.1 -->
+<section>
+  <div class="eyebrow">Context engineering</div>
+  <h1 class="title">CLAUDE.md is the constitution</h1>
+  <div class="subtitle">One file, loaded every session. It states who we serve, how we work, and the scars not to repeat.</div>
+  <div class="cards cols-2">
+    <div class="card"><div class="kicker">Mission &amp; business</div><h3 style="margin-top:6px">What success means</h3><p>MRR, churn, ARPU, the 300K-user goal. Every PR is checked: simpler/faster/more beautiful? moves us toward scale? which metric should it move?</p></div>
+    <div class="card"><div class="kicker">Architecture</div><h3 style="margin-top:6px">The layered path</h3><p><code>route → controller → use case → service → data_layer</code>. Don't skip layers. Each layer carries its own CLAUDE.md.</p></div>
+    <div class="card"><div class="kicker">Process</div><h3 style="margin-top:6px">How work ships</h3><p>TDD by default, trio review on user-facing change, conventional commits with a real <em>why</em> body, one PR per feature off main.</p></div>
+    <div class="card"><div class="kicker">Gotchas</div><h3 style="margin-top:6px">The scars</h3><p>Manual Stripe sync only. Fresh worktree = install first. Notion S3 URLs expire — bundle the bytes. Commit hook eats heredocs.</p></div>
+  </div>
+  <div class="foot"><span class="note">Write down what the repo already knows — then Claude stops re-discovering it.</span><span class="tag">CLAUDE.md</span></div>
+</section>
+
+<!-- 2.2 -->
+<section>
+  <div class="eyebrow">Path-scoped policy</div>
+  <h1 class="title">Rules — knowledge that overrides defaults</h1>
+  <div class="subtitle">10 markdown files, <code>@</code>-imported into CLAUDE.md. Every row maps a foot-gun to the safe pattern and a CWE.</div>
+  <div class="cards cols-2">
+    <div class="cards cols-1">
+      <div class="card"><div class="row"><h3>security.md</h3><span class="chip pink">CWE-mapped</span></div><p>SQL injection, SSRF via instrumentedAxios, zip path traversal, secret logging — each with the safe alternative.</p></div>
+      <div class="card"><div class="row"><h3>testing.md</h3><span class="chip">outside-in</span></div><p>Mock only the external edge. No truthy asserts, no <code>.only</code>, assert generated SQL for raw-knex paths.</p></div>
+      <div class="card"><div class="row"><h3>code-quality.md</h3><span class="chip">Sonar</span></div><p>No <code>any</code>, lead with the positive branch, no hidden env flags, map rows before <code>res.json()</code>.</p></div>
+    </div>
+    <div>
+      <div class="code"><span class="c"># excerpt — rules/security.md</span>
+| Requirement       | Do instead         | CWE     |
+| ----------------- | ------------------ | ------- |
+| <span class="b">No knex.raw+concat</span> | pass bindings [id] | CWE-89  |
+| <span class="b">No !value for id</span>   | value == null      | CWE-754 |
+| <span class="b">No user URL→axios</span>  | instrumentedAxios  | CWE-918 |</div>
+      <p style="font-size:13px;color:var(--gray);margin-top:14px;line-height:1.5"><span class="kicker">Also in rules/</span><br/>sonar · dependencies · email-templates · parallel-pr-coordination · support-confidentiality · browser-attestation · first-time-fix</p>
+    </div>
+  </div>
+  <div class="foot"><span class="note">Rules teach. Hooks enforce. Small path-scoped files beat one giant prompt.</span><span class="tag">rules/</span></div>
+</section>
+
+<!-- SECTION 3 -->
+<section class="sec" data-slide-number="false">
+  <div class="signum">3</div>
+  <div class="sectitle">The team</div>
+  <div class="secsub">Sub-agents — isolated context, own model, own tools</div>
+  <div class="foot"><span>Chapter 3 / 5</span><span class="tag">agents/</span></div>
+</section>
+
+<!-- 3.1 -->
+<section>
+  <div class="eyebrow">The trio</div>
+  <h1 class="title">A product team, modeled as agents</h1>
+  <div class="subtitle">For any user-facing change, all three run in parallel first — then their input is synthesized before code is written.</div>
+  <div class="cards cols-2" style="align-items:center">
+    <div class="cards cols-1">
+      <div class="card"><div class="row"><h3>pm</h3><span class="chip blue">opus</span></div><p>Feedback → spec, prioritization, metrics. Turns raw customer signal into one-page engineering work.</p></div>
+      <div class="card"><div class="row"><h3>designer</h3><span class="chip blue">opus</span></div><p>UI/UX, copy, visual consistency. Returns one recommendation, not a menu of options.</p></div>
+      <div class="card"><div class="row"><h3>engineer</h3><span class="chip blue">opus</span></div><p>Implements the spec, writes tests, opens the PR. Ships.</p></div>
+    </div>
+    <div class="card" style="text-align:center">
+      <div class="kicker" style="text-align:left">The kaizen loop · signal → ship</div>
+      <img src="assets/trio-flow.svg" alt="2anki product trio kaizen loop — signal to ship in hours" style="width:100%;max-width:360px;height:auto;display:block;margin:10px auto 0" />
+    </div>
+  </div>
+  <div class="foot"><span class="note">Be opinionated. One recommendation. Specs fit on one page.</span><span class="tag">the trio</span></div>
+</section>
+
+<!-- 3.2 -->
+<section>
+  <div class="eyebrow">Supporting cast</div>
+  <h1 class="title">Specialists — right model for the job</h1>
+  <div class="subtitle">Ten more agents, invoked by name. Haiku audits, sonnet classifies, opus designs and fixes.</div>
+  <div class="cards cols-2">
+    <div class="card"><div class="row"><h3>conversion-funnel-analyst</h3><span class="chip">sonnet</span></div><p>Weekly funnel pull; names the biggest leak landing→signup→upload→paid plus churn cohorts.</p></div>
+    <div class="card"><div class="row"><h3>prod-incident-responder</h3><span class="chip amber">opus · worktree</span></div><p>Turns a recurring prod crash into one fix PR with a regression test.</p></div>
+    <div class="card"><div class="row"><h3>migration-reviewer</h3><span class="chip">sonnet</span></div><p>Read-only safety review of a Knex migration: locking, backfill, rollback, kanel.</p></div>
+    <div class="card"><div class="row"><h3>support-triage</h3><span class="chip">sonnet</span></div><p>Classifies inbound <code>.eml</code> into bug / billing / how-to / spam / urgent.</p></div>
+    <div class="card"><div class="row"><h3>test-writer</h3><span class="chip amber">opus · worktree</span></div><p>Colocated tests for a source file — tests only, never edits source.</p></div>
+    <div class="card"><div class="row"><h3>dead-code-auditor</h3><span class="chip green">haiku</span></div><p>Read-only scan for unused exports and unreachable branches. Run quarterly.</p></div>
+  </div>
+  <p style="text-align:center;font-size:13px;color:var(--gray);margin-top:14px">+ seo-content · seo-specialist · a11y-reviewer · _trio (shared protocol)</p>
+  <div class="foot"><span class="note">An isolated worker with its own context returns one result. Delegate the noise.</span><span class="tag">specialists</span></div>
+</section>
+
+<!-- SECTION 4 -->
+<section class="sec" data-slide-number="false">
+  <div class="signum">4</div>
+  <div class="sectitle">The enforcement</div>
+  <div class="secsub">Hooks — guardrails at the right moment</div>
+  <div class="foot"><span>Chapter 4 / 5</span><span class="tag">hooks/</span></div>
+</section>
+
+<!-- 4.1 -->
+<section>
+  <div class="eyebrow">Lifecycle hooks</div>
+  <h1 class="title">Hooks the model cannot ignore</h1>
+  <div class="subtitle">Scripts the harness runs on lifecycle events. Exit <code>2</code> blocks the action · exit <code>0</code> passes. This is how a convention becomes unbreakable.</div>
+  <div class="cards cols-4">
+    <div class="card"><div class="kicker">On boot · SessionStart</div><p style="margin-top:8px"><strong>session-start.sh</strong> — branch, last 5 commits, open TODOs.</p></div>
+    <div class="card"><div class="kicker">On prompt · UserPromptSubmit</div><p style="margin-top:8px"><strong>trio_check.sh</strong> — nudge a trio review on feature work.</p></div>
+    <div class="card"><div class="kicker">After edits · PostToolUse</div><p style="margin-top:8px"><strong>post-write-nudge.py</strong> — non-blocking FEATURE.md / test drift nudges.</p></div>
+    <div class="card"><div class="kicker">Before reply · Stop</div><p style="margin-top:8px"><strong>stop-test-coverage.py</strong> — warns if new source shipped untested.</p></div>
+  </div>
+  <div class="foot"><span class="note">Defense in depth: prose → nudge → block. Same rule, three layers.</span><span class="tag">14 hooks · settings.json</span></div>
+</section>
+
+<!-- 4.1b PreToolUse gate -->
+<section>
+  <div class="eyebrow">The gate</div>
+  <h1 class="title">PreToolUse — eight checks before a Bash call</h1>
+  <div class="subtitle">The heaviest event runs a chain. Any one can refuse the command, so an unsafe push or a sloppy commit never leaves the machine.</div>
+  <div class="cards cols-1">
+    <div class="card">
+      <div class="kicker">PreToolUse → Bash · in series</div>
+      <div class="code" style="margin-top:12px;background:#fbfbfc"><span class="b">safety.py</span>                block push-to-main &amp; bare git push
+<span class="b">pre-bash-curl-pipe.py</span>    refuse curl | sh
+<span class="b">check-commit-message.py</span>  enforce conventional + a real why-body
+<span class="b">check-duplicate-commit-message.py</span>  reject a repeated subject
+<span class="b">check-merge-status.py</span>    block merge if any check is FAILURE
+<span class="b">check-browser-attestation.py</span>  web/src merge needs a browser check
+<span class="b">pre-push-typecheck.py</span> / <span class="b">pre-push-format.py</span>  scoped tsc + fmt</div>
+    </div>
+  </div>
+  <div class="cards cols-1" style="margin-top:18px">
+    <div class="card"><div class="kicker">On every Write / Edit</div><p style="font-size:15px;margin-top:6px"><strong>pre-write-secret-scan.py</strong> — a secret is caught before the bytes ever hit disk, not after it lands in a commit.</p></div>
+  </div>
+  <div class="foot"><span class="note">Exit 2 refuses the call. The convention is now unbreakable.</span><span class="tag">hooks · the gate</span></div>
+</section>
+
+<!-- 4.2 -->
+<section>
+  <div class="eyebrow">Wiring &amp; reach</div>
+  <h1 class="title">settings.json, plugins, MCP</h1>
+  <div class="subtitle">The wiring file decides what's pre-approved, which plugins load, and how hooks attach to events.</div>
+  <div class="cards cols-2">
+    <div>
+      <div class="code"><span class="c">// .claude/settings.json</span>
+{
+  <span class="b">"permissions"</span>: { "allow": [
+    "Edit(src/**)",
+    "Write(src/**/*.test.ts)",
+    "Bash(git commit *)"
+  ]},                <span class="c">// no prompt</span>
+  <span class="b">"env"</span>: { CLAUDE_CODE_FORK_SUBAGENT: 1 },
+                     <span class="c">// sub-agents fork the parent</span>
+  <span class="b">"enabledPlugins"</span>: {
+    caveman, typescript-lsp,
+    sonarqube, stripe, playwright
+  },
+  <span class="b">"hooks"</span>: { ... }    <span class="c">// lifecycle</span>
+}</div>
+    </div>
+    <div class="cards cols-1">
+      <div class="card"><div class="row"><h3>Permissions allowlist</h3><span class="chip green">fewer prompts</span></div><p>Pre-approve the safe, frequent calls — edits under <code>src/</code>, test writes, <code>git commit</code>. Everything else still prompts.</p></div>
+      <div class="card"><div class="row"><h3>Plugins</h3><span class="chip blue">5</span></div><p>typescript-lsp (real go-to-def), sonarqube (the rule engine <code>/check</code> can't run), stripe + playwright (read-only).</p></div>
+      <div class="card"><div class="row"><h3>MCP servers</h3><span class="chip">.mcp.json</span></div><p>ide · github · postgres — typed PR/issue access and read-only local DB inspection. Default to read-only; never point at prod.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span class="note">Bring the rest of your stack to the agent — read-only by default.</span><span class="tag">settings.json · MCP</span></div>
+</section>
+
+<!-- 4.3 -->
+<section>
+  <div class="eyebrow">Knowledge on demand</div>
+  <h1 class="title">Commands &amp; skills — loaded when needed</h1>
+  <div class="subtitle">Workflows behind a slash, and engineering procedures the agent pulls in only for the task at hand. Keeps CLAUDE.md small.</div>
+  <div class="cards cols-2">
+    <div class="card"><div class="kicker">.claude/commands/ · 18 slash commands</div>
+      <ul>
+        <li><strong>Trio flow</strong> — /trio · /spec-draft-pr · /implement · /review-pr</li>
+        <li><strong>Status</strong> — /check · /pr-checks · /deploy-status</li>
+        <li><strong>Growth</strong> — /weekly-retro · /triage-feedback · /sales-safari</li>
+        <li><strong>Growth</strong> — /drive-acquisition · /overnight-prs</li>
+        <li><strong>Support</strong> — /support-reply · /changelog</li>
+      </ul>
+    </div>
+    <div class="card"><div class="kicker">.claude/skills/ · 7 procedures</div>
+      <ul>
+        <li><strong>/tdd</strong> — failing test → pass → refactor</li>
+        <li><strong>/add-tests</strong> — backfill coverage</li>
+        <li><strong>/security-audit</strong> — CWE sweep of a diff</li>
+        <li><strong>/simplify</strong> — reuse &amp; dead-weight cleanup</li>
+        <li><strong>/verify-completion</strong> — did it actually work?</li>
+        <li><strong>/systematic-debugging</strong> · /revise-claude-md</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span class="note">/overnight-prs runs autonomously — verify issues, close stale, open PRs until done.</span><span class="tag">commands · skills</span></div>
+</section>
+
+<!-- SECTION 5 -->
+<section class="sec" data-slide-number="false">
+  <div class="signum">5</div>
+  <div class="sectitle">Steal this</div>
+  <div class="secsub">Adopt the pattern in your own repo</div>
+  <div class="foot"><span>Chapter 5 / 5</span><span class="tag">adoption</span></div>
+</section>
+
+<!-- 5.1 -->
+<section>
+  <div class="eyebrow">The recipe</div>
+  <h1 class="title">Five moves, in order</h1>
+  <div class="subtitle">It's just text + git hooks. No platform, no lock-in. Start small; grow as patterns repeat.</div>
+  <div class="cards cols-3">
+    <div class="card"><div class="row"><h3>1 · CLAUDE.md</h3><span class="chip">day one</span></div><p>Stack, entry points, three hard rules, and your single worst gotcha. One file at the repo root.</p></div>
+    <div class="card"><div class="row"><h3>2 · One hook</h3><span class="chip pink">enforce</span></div><p>A single PreToolUse hook for your most expensive mistake. Make the rule machine-checkable.</p></div>
+    <div class="card"><div class="row"><h3>3 · Allowlist</h3><span class="chip green">no prompts</span></div><p>A <code>permissions.allow</code> list for the safe, frequent calls. Kills prompt fatigue.</p></div>
+    <div class="card"><div class="row"><h3>4 · Rules, on demand</h3><span class="chip blue">@import</span></div><p>Pull recurring policy into path-scoped rule files. Load knowledge when the path calls for it.</p></div>
+    <div class="card"><div class="row"><h3>5 · Agents &amp; skills</h3><span class="chip">when it repeats</span></div><p>Add a sub-agent or skill on the third occurrence of a pattern — not the first.</p></div>
+    <div class="card"><div class="kicker">The throughline</div><p style="margin-top:8px">Each scar that bit once becomes a hook or a rule, so it never bites silently again. The setup evolves like code.</p></div>
+  </div>
+  <div class="foot"><span class="note">Rules teach · skills operate · hooks enforce · agents delegate.</span><span class="tag">the recipe</span></div>
+</section>
+
+<!-- 5.2 pitfalls -->
+<section>
+  <div class="eyebrow">Session hygiene</div>
+  <h1 class="title">Keep the context tight, the agent honest</h1>
+  <div class="subtitle">The setup does the heavy lifting — but the operator still decides what the agent sees and whether to trust it.</div>
+  <div class="cards cols-2">
+    <div class="card"><div class="row"><h3>Clear between tasks</h3><span class="chip">/clear</span></div><p>A new task shouldn't inherit the last one's context. A 4-hour catch-all session is slow, expensive, and forgets early decisions.</p></div>
+    <div class="card"><div class="row"><h3>Plan before multi-file work</h3><span class="chip blue">plan mode</span></div><p>Read-only plan → approve → implement. Letting the agent dive into a 10-file change blind means expensive backtracking.</p></div>
+    <div class="card"><div class="row"><h3>Fork the noise away</h3><span class="chip amber">fork sub-agent</span></div><p>A repo-wide grep dumps hundreds of lines into context. Run it in a forked sub-agent — keep the summary, drop the dump.</p></div>
+    <div class="card"><div class="row"><h3>Confidence is not verification</h3><span class="chip pink">diff &amp; test</span></div><p>The agent's "done" is intent, not proof. Read the diff, run the tests yourself. The hooks enforce; you still judge.</p></div>
+  </div>
+  <div class="foot"><span class="note">A clean context is a fast agent. The agent solves — you judge.</span><span class="tag">session hygiene</span></div>
+</section>
+
+<!-- THANKS -->
+<section data-slide-number="false">
+  <div class="eyebrow">Thanks</div>
+  <h1 class="title">What to take with you</h1>
+  <div class="subtitle">The whole setup is readable in <code>.claude/</code> — the handbook, the toolbelt, and the manager, checked into git.</div>
+  <div class="cards cols-2">
+    <div class="card"><div class="row"><h3>Write the rule down</h3><span class="chip">1</span></div><p>Context beats exploration. What the repo knows, CLAUDE.md should say.</p></div>
+    <div class="card"><div class="row"><h3>Make it machine-checkable</h3><span class="chip">2</span></div><p>A hook that exits non-zero is the difference between a guideline and a guarantee.</p></div>
+    <div class="card"><div class="row"><h3>Right-size the worker</h3><span class="chip">3</span></div><p>Haiku audits, sonnet classifies, opus designs. Delegate the noise to a fresh context.</p></div>
+    <div class="card"><div class="row"><h3>It's a living practice</h3><span class="chip">4</span></div><p>Not a one-time setup. Someone owns it the way a CI pipeline has an owner — or it rots.</p></div>
+  </div>
+  <div class="foot"><span class="note">Every scar, written down once.</span><span class="tag">2anki · .claude setup</span></div>
+</section>
+
+</div>
+</div>
+<script src="vendor/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1280,
+    height: 720,
+    margin: 0,
+    center: false,
+    hash: true,
+    controls: false,
+    transition: 'fade',
+    minScale: 0.2,
+    maxScale: 2.0,
+    slideNumber: 'c/t',
+    showSlideNumber: 'speaker'
+  });
+</script>
+</body>
+</html>
