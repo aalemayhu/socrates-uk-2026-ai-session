@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Programming the agent — the .claude setup behind 2anki</title>
+<title>Context engineering with Claude Code — the .claude setup behind 2anki</title>
 <link rel="stylesheet" href="vendor/reveal.css" />
 <style>
 :root {
@@ -139,16 +139,16 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
 <!-- TITLE -->
 <section class="title-slide" data-slide-number="false">
   <div>
-    <div class="lead-eyebrow">SoCraTes UK 2026 · the .claude setup behind 2anki</div>
+    <div class="lead-eyebrow">SoCraTes UK 2026 · context engineering, in practice</div>
     <div class="big">Programming<br/>the agent</div>
-    <div class="deck-sub">How one repo turns Claude Code from a chatbot into a team member that ships PRs — and can't break the rules. All of it is text + git hooks, in version control.</div>
+    <div class="deck-sub">Context engineering is choosing what the model sees, and when. This is how one repo does it — turning Claude Code from a chatbot into a teammate that ships PRs and can't break the rules. All text + git, in version control.</div>
     <div class="byline">
       <img class="avatar" src="assets/avatar.jpg" alt="Alexander Alemayhu" style="object-fit:cover" />
       <div><div class="who">Alexander Alemayhu</div><div class="role">2anki.net · Notion → Anki</div></div>
     </div>
   </div>
   <div>
-    <div class="agenda-kicker">Agenda</div>
+    <div class="agenda-kicker">Agenda · five layers of context engineering</div>
     <div class="agenda-item"><div class="n">1</div><div><div class="h">Why a setup at all</div><div class="d">The mega-prompt anti-pattern</div></div></div>
     <div class="agenda-item"><div class="n">2</div><div><div class="h">The handbook</div><div class="d">CLAUDE.md + 10 path-scoped rule files</div></div></div>
     <div class="agenda-item"><div class="n">3</div><div><div class="h">The team</div><div class="d">13 sub-agents — the trio + specialists</div></div></div>
@@ -161,7 +161,7 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
 <section class="sec" data-slide-number="false">
   <div class="signum">1</div>
   <div class="sectitle">Why a setup at all</div>
-  <div class="secsub">The mega-prompt anti-pattern, and what replaces it</div>
+  <div class="secsub">The mega-prompt anti-pattern — and the case for context engineering</div>
   <div class="foot"><span>Chapter 1 / 5</span><span class="tag">the case for structure</span></div>
 </section>
 
@@ -176,7 +176,7 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
     <div class="card"><h3>Prose can't delegate</h3><p>"Get a second opinion" is words. A sub-agent is a real second context with its own model and tools.</p></div>
   </div>
   <div style="margin-top:18px" class="cards cols-1">
-    <div class="card"><h3>The answer: split knowledge across the lifecycle</h3><p style="font-size:15px">When to <strong>inject</strong> guidance → rules. When to <strong>enforce</strong> it → hooks. When to run a <strong>workflow</strong> → commands &amp; skills. When to <strong>delegate</strong> → sub-agents. Each lives in its own file, in git.</p></div>
+    <div class="card"><h3>The answer: engineer the context</h3><p style="font-size:15px">Decide what the model sees, and when. <strong>Inject</strong> guidance → rules. <strong>Enforce</strong> it → hooks. Run a <strong>workflow</strong> → commands &amp; skills. <strong>Delegate</strong> → sub-agents. Each in its own file, in git. <em>That's context engineering.</em></p></div>
   </div>
   <div class="foot"><span class="note">Composable customization beats a mega-prompt.</span><span class="tag">why structure</span></div>
 </section>
@@ -501,7 +501,7 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
 <section>
   <div class="eyebrow">The recipe</div>
   <h1 class="title">Five moves, in order</h1>
-  <div class="subtitle">It's just text + git hooks. No platform, no lock-in. Start small; grow as patterns repeat.</div>
+  <div class="subtitle">Context engineering is a practice, not a platform — just text + git, no lock-in. Start small; grow as the patterns repeat.</div>
   <div class="cards cols-3">
     <div class="card"><div class="row"><h3>1 · CLAUDE.md</h3><span class="chip">day one</span></div><p>Stack, entry points, three hard rules, and your single worst gotcha. One file at the repo root.</p></div>
     <div class="card"><div class="row"><h3>2 · One hook</h3><span class="chip pink">enforce</span></div><p>A single PreToolUse hook for your most expensive mistake. Make the rule machine-checkable.</p></div>
