@@ -1,0 +1,36 @@
+<svg width="100%" viewBox="0 0 520 300" role="img" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <title>Mega-prompt versus delegating to agents</title>
+  <desc>Reject/approve two-panel meme: rejecting one giant prompt, approving thirteen specialised sub-agents, one job each.</desc>
+  <rect x="1.5" y="1.5" width="517" height="297" rx="18" fill="#fff7f9" stroke="#fbcfe8" stroke-width="2"/>
+  <rect x="12" y="12" width="168" height="138" fill="#fdf2f8"/>
+  <rect x="12" y="150" width="168" height="138" fill="#fce7f3"/>
+  <line x1="180" y1="12" x2="180" y2="288" stroke="#fbcfe8" stroke-width="2"/>
+  <line x1="12" y1="150" x2="508" y2="150" stroke="#fbcfe8" stroke-width="2"/>
+
+  <!-- reject figure -->
+  <g stroke="#831843" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="84" cy="60" r="24" fill="#fff7f9"/>
+    <path d="M54 134 q30 -32 60 0"/>
+    <path d="M110 72 q32 -4 38 -24"/>
+  </g>
+  <rect x="142" y="32" width="26" height="18" rx="5" fill="#fff7f9" stroke="#831843" stroke-width="5"/>
+  <path d="M74 66 q10 8 20 0" stroke="#831843" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+  <!-- approve figure -->
+  <g stroke="#831843" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="84" cy="198" r="24" fill="#fff7f9"/>
+    <path d="M54 272 q30 -32 60 0"/>
+    <path d="M110 208 q28 6 36 -6"/>
+  </g>
+  <circle cx="152" cy="196" r="11" fill="#fff7f9" stroke="#831843" stroke-width="5"/>
+  <rect x="146" y="178" width="9" height="13" rx="4" fill="#831843"/>
+  <path d="M74 202 q10 9 20 0" stroke="#831843" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+  <!-- captions -->
+  <text x="202" y="72" font-size="21" font-weight="700" fill="#1a0a10">One mega-prompt</text>
+  <text x="202" y="99" font-size="21" font-weight="700" fill="#1a0a10">that does everything</text>
+  <text x="496" y="60" font-size="34" text-anchor="end" fill="#db2777">✕</text>
+  <text x="202" y="210" font-size="21" font-weight="700" fill="#1a0a10">13 agents,</text>
+  <text x="202" y="237" font-size="21" font-weight="700" fill="#1a0a10">one job each</text>
+  <text x="496" y="202" font-size="31" text-anchor="end" fill="#059669">✓</text>
+</svg>

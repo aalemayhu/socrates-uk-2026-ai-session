@@ -111,6 +111,7 @@ section.sec { display: flex !important; flex-direction: column; justify-content:
 .sectitle { font-size: 46px; margin-top: 6px; }
 .secsub { font-size: 16px; color: var(--gray); margin-top: 12px; }
 .meme { margin-top: 22px; font-family: var(--mono); font-size: 13.5px; color: var(--brand-deep); background: #fff; border: 1px dashed var(--brand); border-radius: 999px; padding: 9px 18px; display: inline-block; box-shadow: 0 1px 2px rgba(236,72,153,.10); }
+.meme-img { margin: 24px auto 0; width: 100%; max-width: 440px; height: auto; display: block; border-radius: 14px; box-shadow: 0 4px 10px rgba(236,72,153,.12); }
 
 /* ---- title slide ---- */
 section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; gap: 54px; align-items: center; }
@@ -309,7 +310,7 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
   <div class="signum">3</div>
   <div class="sectitle">The team</div>
   <div class="secsub">Sub-agents — isolated context, own model, own tools</div>
-  <div class="meme">🤝 13 sub-agents on staff — and I'm still the bottleneck.</div>
+  <img class="meme-img" src="assets/meme-drake.svg" alt="Meme: rejecting one mega-prompt, approving 13 agents with one job each" />
   <div class="foot"><span>Chapter 3 / 5</span><span class="tag">agents/</span></div>
 </section>
 
@@ -354,7 +355,7 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
   <div class="signum">4</div>
   <div class="sectitle">The enforcement</div>
   <div class="secsub">Hooks — guardrails at the right moment</div>
-  <div class="meme">🚫 The AI tried to push to main. The hook said no.</div>
+  <img class="meme-img" src="assets/meme-twobuttons.svg" alt="Meme: a sweating figure choosing between force-pushing to main and letting the hook stop it" />
   <div class="foot"><span>Chapter 4 / 5</span><span class="tag">hooks/</span></div>
 </section>
 
@@ -461,7 +462,7 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
   <div class="signum">5</div>
   <div class="sectitle">Steal this</div>
   <div class="secsub">Adopt the pattern in your own repo</div>
-  <div class="meme">📦 No framework, no lock-in — just text, git, and questionable life choices.</div>
+  <img class="meme-img" src="assets/meme-thisisfine.svg" alt="Meme: a calm figure with coffee amid flames labelled user uploads, captioned it's just text and git, it's fine" />
   <div class="foot"><span>Chapter 5 / 5</span><span class="tag">adoption</span></div>
 </section>
 

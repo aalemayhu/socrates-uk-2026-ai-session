@@ -1,0 +1,30 @@
+<svg width="100%" viewBox="0 0 520 300" role="img" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <title>The hook decides, not the sweating agent</title>
+  <desc>Two-buttons meme: a sweating figure caught between force-pushing to main and letting the hook stop it.</desc>
+  <rect x="1.5" y="1.5" width="517" height="297" rx="18" fill="#fff7f9" stroke="#fbcfe8" stroke-width="2"/>
+
+  <!-- buttons -->
+  <rect x="36" y="34" width="200" height="58" rx="12" fill="#fce7f3" stroke="#831843" stroke-width="2.5"/>
+  <text x="136" y="60" font-size="15" font-weight="700" text-anchor="middle" fill="#1a0a10">git push --force</text>
+  <text x="136" y="79" font-size="15" font-weight="700" text-anchor="middle" fill="#1a0a10">to main</text>
+
+  <rect x="284" y="34" width="200" height="58" rx="12" fill="#fce7f3" stroke="#831843" stroke-width="2.5"/>
+  <text x="384" y="60" font-size="15" font-weight="700" text-anchor="middle" fill="#1a0a10">let the hook</text>
+  <text x="384" y="79" font-size="15" font-weight="700" text-anchor="middle" fill="#1a0a10">stop me</text>
+
+  <!-- figure with both arms raised to the buttons -->
+  <g stroke="#831843" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="260" cy="190" r="30" fill="#fff7f9"/>
+    <path d="M236 246 q24 -30 48 0"/>
+    <path d="M238 178 q-70 -10 -100 -84"/>
+    <path d="M282 178 q70 -10 100 -84"/>
+  </g>
+  <!-- nervous face -->
+  <circle cx="250" cy="186" r="3" fill="#831843"/>
+  <circle cx="270" cy="186" r="3" fill="#831843"/>
+  <path d="M250 202 q10 6 20 0" stroke="#831843" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <!-- sweat -->
+  <path d="M292 168 q7 10 0 18 q-7 -8 0 -18z" fill="#db2777"/>
+
+  <text x="260" y="288" font-size="15" font-weight="700" text-anchor="middle" fill="#831843">PreToolUse → Bash, every single time</text>
+</svg>
