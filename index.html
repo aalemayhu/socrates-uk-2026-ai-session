@@ -7,14 +7,16 @@
 <link rel="stylesheet" href="vendor/reveal.css" />
 <style>
 :root {
-  --ink: #16181d;
-  --gray: #5c6370;
-  --line: #e6e7ea;
+  --ink: #1a0a10;
+  --gray: #a14a72;
+  --line: #fbcfe8;
   --mono: ui-monospace, "SF Mono", "SFMono-Regular", Menlo, Consolas, monospace;
   --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --brand: #ec4899;
+  --brand-deep: #831843;
   --blue: #e8f1fb;
   --green: #e8f4ec;
-  --pink: #fbe9e9;
+  --pink: #fce7f3;
   --amber: #fbf0e2;
 }
 
@@ -22,7 +24,7 @@
 .reveal { font-family: var(--serif); color: var(--ink); font-size: 22px; }
 .reveal .slides { text-align: left; }
 .reveal .slides section {
-  background: #fff;
+  background: #fff7f9;
   padding: 50px 66px 64px;
   height: 720px;
   box-sizing: border-box;
@@ -35,7 +37,7 @@
 .reveal strong { font-weight: 700; color: inherit; }
 .reveal em { font-style: italic; }
 .reveal code {
-  font-family: var(--mono); font-size: .82em; background: #f4f5f7;
+  font-family: var(--mono); font-size: .82em; background: #fce7f3;
   padding: 1px 5px; border-radius: 5px;
 }
 .reveal ul { margin: 6px 0; padding-left: 20px; list-style: disc; display: block; }
@@ -65,7 +67,7 @@
 .stat-card { text-align: center; padding: 26px 16px; }
 .card {
   border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px;
-  box-shadow: 0 1px 2px rgba(0,0,0,.045); background: #fff;
+  box-shadow: 0 1px 2px rgba(236,72,153,.10); background: #fff;
 }
 .reveal .card h3 { font-size: 19px; margin-bottom: 4px; }
 .card p { font-size: 14px; color: var(--gray); margin: 5px 0 0; line-height: 1.4; }
@@ -76,23 +78,23 @@
 .chip {
   font-family: var(--mono); font-size: 10.5px; letter-spacing: .06em;
   text-transform: uppercase; padding: 3px 9px; border-radius: 999px;
-  background: #eef1f4; color: #2a2d33; white-space: nowrap;
+  background: #fce7f3; color: var(--brand-deep); white-space: nowrap;
 }
 .chip.blue { background: var(--blue); } .chip.green { background: var(--green); }
 .chip.pink { background: var(--pink); } .chip.amber { background: var(--amber); }
 
 /* ---- stats ---- */
-.statnum { font-family: var(--mono); font-size: 40px; font-weight: 700; letter-spacing: -.02em; line-height: 1; }
+.statnum { font-family: var(--mono); font-size: 40px; font-weight: 700; letter-spacing: -.02em; line-height: 1; color: var(--brand); }
 .statlabel { font-size: 13px; color: var(--gray); margin-top: 8px; }
 
 /* ---- code ---- */
 .code {
   font-family: var(--mono); font-size: 15px; line-height: 1.55;
-  background: #f6f7f9; border: 1px solid var(--line); border-radius: 12px;
-  padding: 18px 20px; color: #2a2d33; white-space: pre; overflow: hidden;
+  background: #fdf2f8; border: 1px solid var(--line); border-radius: 12px;
+  padding: 18px 20px; color: #5a2a40; white-space: pre; overflow: hidden;
 }
-.code .c { color: #8a909c; }
-.code .b { color: #16181d; font-weight: 700; }
+.code .c { color: #bd4f7c; }
+.code .b { color: var(--brand-deep); font-weight: 700; }
 
 /* ---- footer rule ---- */
 .foot {
@@ -105,7 +107,7 @@
 
 /* ---- section divider ---- */
 section.sec { display: flex !important; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-.signum { font-size: 96px; font-weight: 700; line-height: .9; }
+.signum { font-size: 96px; font-weight: 700; line-height: .9; color: var(--brand); }
 .sectitle { font-size: 46px; margin-top: 6px; }
 .secsub { font-size: 16px; color: var(--gray); margin-top: 12px; }
 
@@ -119,13 +121,13 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
 .byline .who { font-size: 15px; font-weight: 700; }
 .byline .role { font-size: 13px; color: var(--gray); }
 .agenda-kicker { text-align: center; font-family: var(--mono); font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--gray); margin-bottom: 14px; }
-.agenda-item { display: flex; gap: 18px; align-items: center; border: 1px solid var(--line); border-radius: 12px; padding: 14px 20px; margin-bottom: 12px; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
+.agenda-item { display: flex; gap: 18px; align-items: center; border: 1px solid var(--line); border-radius: 12px; padding: 14px 20px; margin-bottom: 12px; box-shadow: 0 1px 2px rgba(236,72,153,.08); }
 .agenda-item .n { font-size: 22px; font-weight: 700; color: var(--gray); min-width: 22px; }
 .agenda-item .h { font-size: 16px; font-weight: 700; }
 .agenda-item .d { font-size: 13px; color: var(--gray); }
 
 /* ---- reveal slide number ---- */
-.reveal .slide-number { font-family: var(--mono); background: none; color: #b9bcc4; font-size: 11px; right: 18px; bottom: 12px; }
+.reveal .slide-number { font-family: var(--mono); background: none; color: #d8a5c2; font-size: 11px; right: 18px; bottom: 12px; }
 </style>
 </head>
 <body>
@@ -359,7 +361,7 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
   <div class="cards cols-1">
     <div class="card">
       <div class="kicker">PreToolUse → Bash · in series</div>
-      <div class="code" style="margin-top:12px;background:#fbfbfc"><span class="b">safety.py</span>                block push-to-main &amp; bare git push
+      <div class="code" style="margin-top:12px;background:#fff7f9"><span class="b">safety.py</span>                block push-to-main &amp; bare git push
 <span class="b">pre-bash-curl-pipe.py</span>    refuse curl | sh
 <span class="b">check-commit-message.py</span>  enforce conventional + a real why-body
 <span class="b">check-merge-status.py</span>    block merge if any check is FAILURE
