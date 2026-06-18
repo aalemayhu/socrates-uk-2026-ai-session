@@ -139,7 +139,7 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
     <div class="big">Programming<br/>the agent</div>
     <div class="deck-sub">How one repo turns Claude Code from a chatbot into a team member that ships PRs — and can't break the rules. All of it is text + git hooks, in version control.</div>
     <div class="byline">
-      <div class="avatar">AA</div>
+      <img class="avatar" src="assets/avatar.jpg" alt="Alexander Alemayhu" style="object-fit:cover" />
       <div><div class="who">Alexander Alemayhu</div><div class="role">2anki.net · Notion → Anki</div></div>
     </div>
   </div>
@@ -220,6 +220,23 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
     <div class="card"><div class="kicker">The point</div><p style="font-size:15px;margin-top:6px">None of this is framework. It's markdown, JSON, and shell — readable in a PR, evolving with the code. The next five chapters walk each column.</p></div>
   </div>
   <div class="foot"><span class="note">Five file types, one job each.</span><span class="tag">.claude/ by the numbers</span></div>
+</section>
+
+<!-- 1.4 proof -->
+<section>
+  <div class="eyebrow">Does it pay off?</div>
+  <h1 class="title">The git history, not the pitch</h1>
+  <div class="subtitle">Real numbers from the 2anki/server commit log — one solo maintainer, no projections. The setup earns its keep or the log says so.</div>
+  <div class="cards cols-4">
+    <div class="card stat-card"><div class="statnum">~40×</div><div class="statlabel">monthly commits, before → peak (≈30 → 1,188 in May ’26)</div></div>
+    <div class="card stat-card"><div class="statnum">100%</div><div class="statlabel">of the last 200 commits are AI co-authored</div></div>
+    <div class="card stat-card"><div class="statnum">Apr ’26</div><div class="statlabel">Claude Code adopted — the output curve bends right after</div></div>
+    <div class="card stat-card"><div class="statnum">76</div><div class="statlabel">commits tuning .claude/ — a manual, not a one-off</div></div>
+  </div>
+  <div class="cards cols-1" style="margin-top:18px">
+    <div class="card"><div class="kicker">Read the fine print</div><p style="font-size:15px;margin-top:6px">One maintainer, a six-year-old <em>paid</em> product — and the AI era is only Apr–Jun 2026. Fixes still outnumber features ~2.5:1: this is real maintenance under load, not a greenfield demo. Every figure here is a <code>git log</code> trailer count — your own repo can be measured the same way.</p></div>
+  </div>
+  <div class="foot"><span class="note">Adopt the setup, then let your own git log judge it — not the slides.</span><span class="tag">proof · git log</span></div>
 </section>
 
 <!-- SECTION 2 -->
@@ -345,9 +362,9 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
       <div class="code" style="margin-top:12px;background:#fbfbfc"><span class="b">safety.py</span>                block push-to-main &amp; bare git push
 <span class="b">pre-bash-curl-pipe.py</span>    refuse curl | sh
 <span class="b">check-commit-message.py</span>  enforce conventional + a real why-body
-<span class="b">check-duplicate-commit-message.py</span>  reject a repeated subject
 <span class="b">check-merge-status.py</span>    block merge if any check is FAILURE
 <span class="b">check-browser-attestation.py</span>  web/src merge needs a browser check
+<span class="b">check-duplicate-commit-message.py</span>  reject a repeated subject
 <span class="b">pre-push-typecheck.py</span> / <span class="b">pre-push-format.py</span>  scoped tsc + fmt</div>
     </div>
   </div>
@@ -436,7 +453,7 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
     <div class="card"><div class="row"><h3>2 · One hook</h3><span class="chip pink">enforce</span></div><p>A single PreToolUse hook for your most expensive mistake. Make the rule machine-checkable.</p></div>
     <div class="card"><div class="row"><h3>3 · Allowlist</h3><span class="chip green">no prompts</span></div><p>A <code>permissions.allow</code> list for the safe, frequent calls. Kills prompt fatigue.</p></div>
     <div class="card"><div class="row"><h3>4 · Rules, on demand</h3><span class="chip blue">@import</span></div><p>Pull recurring policy into path-scoped rule files. Load knowledge when the path calls for it.</p></div>
-    <div class="card"><div class="row"><h3>5 · Agents &amp; skills</h3><span class="chip">when it repeats</span></div><p>Add a sub-agent or skill on the third occurrence of a pattern — not the first.</p></div>
+    <div class="card"><div class="row"><h3>5 · Agents &amp; skills</h3><span class="chip">when it repeats</span></div><p>Add a sub-agent or skill on the third occurrence of a pattern — not the first. And for a single task, inline often beats a fresh sub-agent: this repo has a commit walking that back.</p></div>
     <div class="card"><div class="kicker">The throughline</div><p style="margin-top:8px">Each scar that bit once becomes a hook or a rule, so it never bites silently again. The setup evolves like code.</p></div>
   </div>
   <div class="foot"><span class="note">Rules teach · skills operate · hooks enforce · agents delegate.</span><span class="tag">the recipe</span></div>
