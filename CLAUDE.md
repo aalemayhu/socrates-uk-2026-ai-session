@@ -31,4 +31,4 @@ Open over HTTP, not `file://` — reveal.js uses `hash: true` routing and loads 
 
 ## Content accuracy
 
-The deck quotes specific counts from the 2anki `.claude/` setup (10 rules, 13 agents, 18 commands, 7 skills, 14 hooks). These appear in multiple slides (title agenda, anatomy 1.2, by-the-numbers 1.3). If one count changes, update every occurrence so the deck stays consistent.
+The deck quotes specific counts from the 2anki `.claude/` setup (10 rules, 13 agents, 17 commands, 7 skills, 14 hooks). These appear in multiple slides (title agenda, anatomy 1.2, by-the-numbers 1.3). If one count changes, update every occurrence so the deck stays consistent.

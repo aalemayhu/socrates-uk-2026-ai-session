@@ -190,14 +190,14 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
 ├── <span class="b">settings.json</span>     <span class="c"># wires hooks → lifecycle</span>
 ├── <span class="b">rules/</span>     (10)   <span class="c"># @imported policy docs</span>
 ├── <span class="b">agents/</span>    (13)   <span class="c"># the trio + specialists</span>
-├── <span class="b">commands/</span>  (18)   <span class="c"># slash-command workflows</span>
+├── <span class="b">commands/</span>  (17)   <span class="c"># slash-command workflows</span>
 ├── <span class="b">skills/</span>     (7)   <span class="c"># on-demand procedures</span>
 └── <span class="b">hooks/</span>    (14)   <span class="c"># deterministic guardrails</span></div>
     </div>
     <div class="cards cols-1">
       <div class="card"><div class="row"><h3>Rules &amp; constitution</h3><span class="chip">10 + CLAUDE.md</span></div><p>Markdown policy docs, each row = requirement → do-instead → CWE. <code>@</code>-imported so they're always live.</p></div>
       <div class="card"><div class="row"><h3>Agents</h3><span class="chip blue">13</span></div><p>Isolated workers — pm, designer, engineer, plus 10 specialists. Cheap model where it fits.</p></div>
-      <div class="card"><div class="row"><h3>Commands &amp; skills</h3><span class="chip green">18 + 7</span></div><p>Repeatable workflows behind a slash, plus loadable engineering procedures.</p></div>
+      <div class="card"><div class="row"><h3>Commands &amp; skills</h3><span class="chip green">17 + 7</span></div><p>Repeatable workflows behind a slash, plus loadable engineering procedures.</p></div>
       <div class="card"><div class="row"><h3>Hooks</h3><span class="chip pink">14</span></div><p>Shell/Python scripts the harness runs on lifecycle events. They can refuse the action.</p></div>
     </div>
   </div>
@@ -212,7 +212,7 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
   <div class="cards cols-5">
     <div class="card stat-card"><div class="statnum">10</div><div class="statlabel">rule files</div></div>
     <div class="card stat-card"><div class="statnum">13</div><div class="statlabel">sub-agents</div></div>
-    <div class="card stat-card"><div class="statnum">18</div><div class="statlabel">slash commands</div></div>
+    <div class="card stat-card"><div class="statnum">17</div><div class="statlabel">slash commands</div></div>
     <div class="card stat-card"><div class="statnum">7</div><div class="statlabel">skills</div></div>
     <div class="card stat-card"><div class="statnum">14</div><div class="statlabel">lifecycle hooks</div></div>
   </div>
@@ -305,7 +305,7 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
     <div class="card"><div class="row"><h3>prod-incident-responder</h3><span class="chip amber">opus · worktree</span></div><p>Turns a recurring prod crash into one fix PR with a regression test.</p></div>
     <div class="card"><div class="row"><h3>migration-reviewer</h3><span class="chip">sonnet</span></div><p>Read-only safety review of a Knex migration: locking, backfill, rollback, kanel.</p></div>
     <div class="card"><div class="row"><h3>support-triage</h3><span class="chip">sonnet</span></div><p>Classifies inbound <code>.eml</code> into bug / billing / how-to / spam / urgent.</p></div>
-    <div class="card"><div class="row"><h3>test-writer</h3><span class="chip amber">opus · worktree</span></div><p>Colocated tests for a source file — tests only, never edits source.</p></div>
+    <div class="card"><div class="row"><h3>test-writer</h3><span class="chip blue">opus</span></div><p>Colocated tests for a source file — tests only, never edits source.</p></div>
     <div class="card"><div class="row"><h3>dead-code-auditor</h3><span class="chip green">haiku</span></div><p>Read-only scan for unused exports and unreachable branches. Run quarterly.</p></div>
   </div>
   <p style="text-align:center;font-size:13px;color:var(--gray);margin-top:14px">+ seo-content · seo-specialist · a11y-reviewer · _trio (shared protocol)</p>
@@ -383,7 +383,7 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
     <div class="cards cols-1">
       <div class="card"><div class="row"><h3>Permissions allowlist</h3><span class="chip green">fewer prompts</span></div><p>Pre-approve the safe, frequent calls — edits under <code>src/</code>, test writes, <code>git commit</code>. Everything else still prompts.</p></div>
       <div class="card"><div class="row"><h3>Plugins</h3><span class="chip blue">5</span></div><p>typescript-lsp (real go-to-def), sonarqube (the rule engine <code>/check</code> can't run), stripe + playwright (read-only).</p></div>
-      <div class="card"><div class="row"><h3>MCP servers</h3><span class="chip">.mcp.json</span></div><p>ide · github · postgres — typed PR/issue access and read-only local DB inspection. Default to read-only; never point at prod.</p></div>
+      <div class="card"><div class="row"><h3>MCP servers</h3><span class="chip">.mcp.json</span></div><p>ide · github — typed PR/issue access and editor go-to-def. Default to read-only; never point at prod.</p></div>
     </div>
   </div>
   <div class="foot"><span class="note">Bring the rest of your stack to the agent — read-only by default.</span><span class="tag">settings.json · MCP</span></div>
@@ -395,7 +395,7 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
   <h1 class="title">Commands &amp; skills — loaded when needed</h1>
   <div class="subtitle">Workflows behind a slash, and engineering procedures the agent pulls in only for the task at hand. Keeps CLAUDE.md small.</div>
   <div class="cards cols-2">
-    <div class="card"><div class="kicker">.claude/commands/ · 18 slash commands</div>
+    <div class="card"><div class="kicker">.claude/commands/ · 17 slash commands</div>
       <ul>
         <li><strong>Trio flow</strong> — /trio · /spec-draft-pr · /implement · /review-pr</li>
         <li><strong>Status</strong> — /check · /pr-checks · /deploy-status</li>
