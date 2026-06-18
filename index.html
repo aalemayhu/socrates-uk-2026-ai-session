@@ -153,7 +153,7 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
     <div class="agenda-item"><div class="n">2</div><div><div class="h">The handbook</div><div class="d">CLAUDE.md + 10 path-scoped rule files</div></div></div>
     <div class="agenda-item"><div class="n">3</div><div><div class="h">The team</div><div class="d">13 sub-agents — the trio + specialists</div></div></div>
     <div class="agenda-item"><div class="n">4</div><div><div class="h">The enforcement</div><div class="d">14 hooks across the lifecycle</div></div></div>
-    <div class="agenda-item"><div class="n">5</div><div><div class="h">Steal this</div><div class="d">Adopt it in your own repo</div></div></div>
+    <div class="agenda-item"><div class="n">5</div><div><div class="h">Make it yours</div><div class="d">Adapt the method to your repo</div></div></div>
   </div>
 </section>
 
@@ -210,20 +210,20 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
 
 <!-- 1.3 by the numbers -->
 <section>
-  <div class="eyebrow">By the numbers</div>
-  <h1 class="title">What's checked into .claude/</h1>
-  <div class="subtitle">A real repo, not a toy. This is the surface one engineer maintains alongside the product.</div>
+  <div class="eyebrow">Earned, not collected</div>
+  <h1 class="title">Every one started as a problem</h1>
+  <div class="subtitle">These counts aren't a target to hit — they're a fossil record. Each file was added the day something broke or a pattern repeated for the third time. Never before.</div>
   <div class="cards cols-5">
-    <div class="card stat-card"><div class="statnum">10</div><div class="statlabel">rule files</div></div>
-    <div class="card stat-card"><div class="statnum">13</div><div class="statlabel">sub-agents</div></div>
-    <div class="card stat-card"><div class="statnum">17</div><div class="statlabel">slash commands</div></div>
-    <div class="card stat-card"><div class="statnum">7</div><div class="statlabel">skills</div></div>
-    <div class="card stat-card"><div class="statnum">14</div><div class="statlabel">lifecycle hooks</div></div>
+    <div class="card stat-card"><div class="statnum">10</div><div class="statlabel">rules — defaults that bit us</div></div>
+    <div class="card stat-card"><div class="statnum">13</div><div class="statlabel">agents — roles worth isolating</div></div>
+    <div class="card stat-card"><div class="statnum">17</div><div class="statlabel">commands — workflows we repeat</div></div>
+    <div class="card stat-card"><div class="statnum">7</div><div class="statlabel">skills — procedures, on demand</div></div>
+    <div class="card stat-card"><div class="statnum">14</div><div class="statlabel">hooks — mistakes made unrepeatable</div></div>
   </div>
   <div class="cards cols-1" style="margin-top:18px">
-    <div class="card"><div class="kicker">The point</div><p style="font-size:15px;margin-top:6px">None of this is framework. It's markdown, JSON, and shell — readable in a PR, evolving with the code. The next five chapters walk each column.</p></div>
+    <div class="card"><div class="kicker">The point</div><p style="font-size:15px;margin-top:6px">None of this is framework — markdown, JSON, and shell, readable in a PR. And none of it is a number to chase: a setup with three earned files beats one with thirty copied ones.</p></div>
   </div>
-  <div class="foot"><span class="note">Five file types, one job each.</span><span class="tag">.claude/ by the numbers</span></div>
+  <div class="foot"><span class="note">Don't copy the count — copy the method: encode the pain you actually have.</span><span class="tag">earned, not collected</span></div>
 </section>
 
 <!-- 1.4 what is 2anki -->
@@ -246,7 +246,7 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
 <section>
   <div class="eyebrow">Does it pay off?</div>
   <h1 class="title">The git history, not the pitch</h1>
-  <div class="subtitle">Real numbers from the 2anki/server commit log — one solo maintainer, no projections. The setup earns its keep or the log says so.</div>
+  <div class="subtitle">Real numbers from the 2anki/server commit log — one solo maintainer. Read them as a correlation, not a promise: more commits is the footprint, not the goal.</div>
   <div class="cards cols-4">
     <div class="card stat-card"><div class="statnum">~40×</div><div class="statlabel">monthly commits, before → peak (≈30 → 1,188 in May ’26)</div></div>
     <div class="card stat-card"><div class="statnum">100%</div><div class="statlabel">of the last 200 commits are AI co-authored</div></div>
@@ -254,9 +254,9 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
     <div class="card stat-card"><div class="statnum">76</div><div class="statlabel">commits tuning .claude/ — a manual, not a one-off</div></div>
   </div>
   <div class="cards cols-1" style="margin-top:18px">
-    <div class="card"><div class="kicker">Read the fine print</div><p style="font-size:15px;margin-top:6px">One maintainer, a six-year-old <em>paid</em> product — and the AI era is only Apr–Jun 2026. Fixes outnumber features ~2.5:1 — the unbounded-input reality from the last slide, not a greenfield demo. Every figure here is a <code>git log</code> trailer count — your own repo can be measured the same way.</p></div>
+    <div class="card"><div class="kicker">What this does — and doesn't — prove</div><p style="font-size:15px;margin-top:6px"><strong>Volume isn't virtue.</strong> This shows the setup <em>correlates</em> with a big output jump for one maintainer on a six-year-old paid product — not that it caused it, and not that more commits is better. Fixes outnumber features ~2.5:1 (the unbounded-input reality, not a greenfield demo). Don't chase the curve — measure your own work your own way.</p></div>
   </div>
-  <div class="foot"><span class="note">Adopt the setup, then let your own git log judge it — not the slides.</span><span class="tag">proof · git log</span></div>
+  <div class="foot"><span class="note">A correlation, not a promise. Let your own git log judge it — not the slides.</span><span class="tag">proof · git log</span></div>
 </section>
 
 <!-- SECTION 2 -->
@@ -476,8 +476,8 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
 <!-- SECTION 5 -->
 <section class="sec" data-slide-number="false">
   <div class="signum">5</div>
-  <div class="sectitle">Steal this</div>
-  <div class="secsub">Adopt the pattern in your own repo</div>
+  <div class="sectitle">Make it yours</div>
+  <div class="secsub">Adapt the method — not the file count — to your own repo</div>
   <img class="meme-img" src="assets/meme-thisisfine.svg" alt="Meme: a calm figure with coffee amid flames labelled user uploads, captioned it's just text and git, it's fine" />
   <div class="foot"><span>Chapter 5 / 5</span><span class="tag">adoption</span></div>
 </section>
@@ -500,7 +500,7 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
 <!-- 5.1 -->
 <section>
   <div class="eyebrow">The recipe</div>
-  <h1 class="title">Five moves, in order</h1>
+  <h1 class="title">Five moves, smallest first</h1>
   <div class="subtitle">Context engineering is a practice, not a platform — just text + git, no lock-in. Start small; grow as the patterns repeat.</div>
   <div class="cards cols-3">
     <div class="card"><div class="row"><h3>1 · CLAUDE.md</h3><span class="chip">day one</span></div><p>Stack, entry points, three hard rules, and your single worst gotcha. One file at the repo root.</p></div>
