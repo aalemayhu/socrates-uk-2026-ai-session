@@ -457,6 +457,22 @@ section.title-slide { display: grid !important; grid-template-columns: 1fr 1fr; 
   <div class="foot"><span class="note">/overnight-prs runs autonomously — verify issues, close stale, open PRs until done.</span><span class="tag">commands · skills</span></div>
 </section>
 
+<!-- 4.4 range / highlights -->
+<section>
+  <div class="eyebrow">Range</div>
+  <h1 class="title">Not just code — the setup at full stretch</h1>
+  <div class="subtitle">The same idea — encode the judgment, then let it run — reaches well past writing functions. Six it does that surprise people.</div>
+  <div class="cards cols-2">
+    <div class="card"><div class="row"><h3>/overnight-prs</h3><span class="chip amber">autonomy</span></div><p>Works the whole backlog while you sleep: verifies each issue against current code, closes the dead ones with evidence, opens review-ready PRs. When a real call is needed it convenes the trio and writes a <code>## Decisions made overnight</code> block to override in the morning.</p></div>
+    <div class="card"><div class="row"><h3>The "fixed" gate</h3><span class="chip green">verify</span></div><p>Bans the word <em>fixed</em> until it's merged, deployed, and confirmed on the reporter's own trigger path. Written because two false "fixed" claims shipped in one June thread — the tests were green.</p></div>
+    <div class="card"><div class="row"><h3>browser-attestation</h3><span class="chip pink">enforce</span></div><p>A merge hook blocks any <code>web/src</code> PR unless the body ticks <em>Golden path on localhost:3000</em> and <em>No console errors at 375px</em>. Honour-system — but the words have to be there.</p></div>
+    <div class="card"><div class="row"><h3>/pr-visual-diff</h3><span class="chip blue">craft</span></div><p>Playwright + ffmpeg render before/after straight from the diff's own <code>-</code>/<code>+</code> lines and post stills and motion GIFs to the PR. The reviewer <em>sees</em> the change instead of reading a description of it.</p></div>
+    <div class="card"><div class="row"><h3>Voice rules</h3><span class="chip blue">copy</span></div><p>A banned-word list for anything a user reads — no <em>render, parse, token, endpoint</em>. "Localize, don't translate." Sign-off is "The 2anki Team": no "Happy studying", no exclamation marks.</p></div>
+    <div class="card"><div class="row"><h3>funnel-analyst + retro</h3><span class="chip green">growth</span></div><p>Names the single biggest funnel leak as a number, a delta, a recommendation. A "treadmill alarm" fires when fixes climb while signups stay flat — the 2023–25 stagnation signature, caught early.</p></div>
+  </div>
+  <div class="foot"><span class="note">Autonomy, verification, craft, growth, voice — one <code>.claude/</code> folder.</span><span class="tag">range</span></div>
+</section>
+
 <!-- SECTION 5 -->
 <section class="sec" data-slide-number="false">
   <div class="signum">5</div>
